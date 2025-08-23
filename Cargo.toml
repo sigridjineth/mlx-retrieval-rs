@@ -1,0 +1,129 @@
+[package]
+name = "mlx-retrieval-rs"
+version = "0.1.0"
+edition = "2021"
+description = "High-performance Rust implementation of MLX-based text retrieval and embedding training system"
+license = "MIT"
+keywords = ["embeddings", "retrieval", "nlp", "machine-learning", "tdd"]
+categories = ["science", "text-processing"]
+
+[[bin]]
+name = "mlx-retrieval-rs"
+path = "src/bin/main.rs"
+
+[[bin]]
+name = "validate"
+path = "src/bin/validate.rs"
+
+[[example]]
+name = "infonce_training"
+path = "examples/infonce_training.rs"
+
+[[example]]
+name = "data_batching"
+path = "examples/data_batching.rs"
+
+[[example]]
+name = "embeddings_pooling"
+path = "examples/embeddings_pooling.rs"
+
+[[example]]
+name = "evaluation"
+path = "examples/evaluation.rs"
+
+[[example]]
+name = "full_training"
+path = "examples/full_training.rs"
+
+[dependencies]
+# Deep Learning Framework - MLX Rust bindings
+mlx-rs = { version = "0.21.0", features = ["metal", "accelerate"] }
+
+# Tokenization
+tokenizers = "0.19"
+
+# Async Runtime
+tokio = { version = "1.0", features = ["full"] }
+tokio-stream = "0.1"
+futures = "0.3"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# HTTP Client for HuggingFace Hub
+reqwest = { version = "0.11", features = ["json", "stream"] }
+hf-hub = "0.3"
+
+# Error Handling
+eyre = "0.6"
+thiserror = "1.0"
+anyhow = "1.0"
+
+# CLI
+clap = { version = "4.0", features = ["derive"] }
+
+# Configuration
+figment = { version = "0.10", features = ["toml", "json", "yaml", "env"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "chrono"] }
+
+# Model Storage
+safetensors = "0.4"
+
+# Math and Random
+rand = "0.8"
+ndarray = "0.15"
+
+# Parallel Processing  
+rayon = "1.7"
+
+# Elasticsearch Client (optional) - disabled for now
+# elasticsearch = { version = "8.5", optional = true }
+
+# UUID Generation
+uuid = { version = "1.0", features = ["v4", "serde"] }
+
+# Time handling
+chrono = { version = "0.4", features = ["serde"] }
+
+# Memory-mapped files
+memmap2 = "0.9"
+
+# Additional dependencies for async processing
+pin-project = "1.0"
+futures-util = "0.3"
+
+# Additional dependencies
+dashmap = "5.0"
+
+[dev-dependencies]
+# Testing
+tokio-test = "0.4"
+proptest = "1.0"
+tempfile = "3.0"
+
+[features]
+default = []
+
+# GPU acceleration features are built into mlx-rs with metal and accelerate features
+# Elasticsearch integration (optional) - disabled for now
+# elasticsearch-integration = ["elasticsearch"]
+
+# Development features  
+dev = ["tracing-subscriber/fmt"]
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"
+
+[profile.dev]
+opt-level = 1
+
+# Benchmarks will be added following TDD methodology
+# [[bench]]
+# name = "embedding_bench"
+# harness = false

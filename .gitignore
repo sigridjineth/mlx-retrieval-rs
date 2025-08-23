@@ -1,0 +1,6 @@
+/target
+mlx-retrieval
+.cargo
+.idea
+./tests/gemma-3-270m-mlx
+tests/
